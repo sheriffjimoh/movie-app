@@ -18,6 +18,7 @@
                      </div>
                 </header>
                 <section>
+
                      <table>
                          <thead>
                              <tr>
@@ -33,37 +34,15 @@
                              </tr>
                          </thead>
                          <tbody>
-                             <tr>
-                                 <td>1</td>
-                                 <td><img src="https://lumiere-a.akamaihd.net/v1/images/p_cruella_disneyplus_21093_6184d4aa.jpeg" alt=""></td>
-                                 <td>New Era Jack</td>
-                                 <td>Nollywood</td>
-                                 <td>Duis aute irure dolor in reprehendeit in voluptate velit esse....</td>
-                                  <td>Yemi Lare, Badmus Thomas, Eld Cuper</td>
+                             <tr v-for="(movie, index) in movies" :key="movie.id">
+                                 <td >{{index+1}}</td>
+                                 <td><img :src="movie.image" alt=""></td>
+                                 <td>{{movie.title}}</td>
+                                 <td>{{movie.category_id}}</td>
+                                 <td>{{movie.description}}</td>
+                                  <td>{{movie.artist}}</td>
                                   <td>5</td>
-                                  <td>02/03/2030</td>
-                                  <td> <a href="#" class="red">Delete</a>| <a href="#" class="green">Edit</a>|<a href="#">View</a></td>
-                             </tr>
-                               <tr>
-                                 <td>2</td>
-                                 <td><img src="https://lumiere-a.akamaihd.net/v1/images/p_cruella_disneyplus_21093_6184d4aa.jpeg" alt=""></td>
-                                 <td>New Era Jack</td>
-                                 <td>Nollywood</td>
-                                 <td>Duis aute irure dolor in reprehendeit in voluptate velit esse....</td>
-                                  <td>Yemi Lare, Badmus Thomas, Eld Cuper</td>
-                                  <td>5</td>
-                                  <td>02/03/2030</td>
-                                  <td> <a href="#" class="red">Delete</a>| <a href="#" class="green">Edit</a>|<a href="#">View</a></td>
-                             </tr>
-                               <tr>
-                                 <td>3</td>
-                                 <td><img src="https://d2j1wkp1bavyfs.cloudfront.net/admin-uploads/posters/f9-movie-poster_1618415923.jpg?d=360x540&q=50" alt=""></td>
-                                 <td>New Era Jack</td>
-                                 <td>Nollywood</td>
-                                 <td>Duis aute irure dolor in reprehendeit in voluptate velit esse....</td>
-                                  <td>Yemi Lare, Badmus Thomas, Eld Cuper</td>
-                                  <td>5</td>
-                                  <td>02/03/2030</td>
+                                  <td>{{movie.created_at}}</td>
                                   <td> <a href="#" class="red">Delete</a>| <a href="#" class="green">Edit</a>|<a href="#">View</a></td>
                              </tr>
                          </tbody>
@@ -74,28 +53,46 @@
       </div>
        
        <!--Add Movies Modal  -->
-     <modal :check="isactive" ></modal>
+     <addmovies :check="isactive" />
+     <addcategory :check="isactiveCategory" />
     </div>
 </template>
 
 <script>
-import modal from '../../components/modal.vue';
+import Addmovies from './Addmovies.vue';
+import Addcategory from './Addcategory.vue';
 export default {
 
     components:{
-        modal
+        Addmovies,
+        Addcategory
     },
 
     data(){
         return{
-        isactive:false
+            srn:1,
+        isactive:false,
+        isactiveCategory:false,
+        movies:[]
             
         }
+    },
+
+    async created(){
+    //   using async
+
+           const response = await fetch("http://localhost:3000/api/movie/");
+           const dataRow = await response.json();
+           this.movies = dataRow.data;
+           
     },
     methods:{
         Activatemodal(){
         this.isactive = true;
         console.log(this.isactive);
+        },
+        Activatecategorymodal(){
+          this.isactiveCategory = true;
         }
     }
        

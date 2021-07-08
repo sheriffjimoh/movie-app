@@ -124,3 +124,40 @@ a {
 .main .container section table tbody tr td img {
   width: 120px;
 }
+
+.data-section {
+  padding-top: 30px;
+}
+.data-section h3 {
+  text-align: center;
+}
+.data-section table {
+  width: 100%;
+  overflow-x: auto;
+  border-top: 2px solid #15172B;
+}
+.data-section table thead {
+  padding: 10px;
+}
+.data-section table thead th {
+  padding: 10px 10px;
+  width: 120px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+}
+.data-section table tbody {
+  padding: 10px;
+}
+.data-section table tbody tr {
+  text-align: center;
+  border-bottom: 4px solid var(--grey) !important;
+}
+.data-section table tbody tr td {
+  font-weight: 300;
+  font-size: 17px;
+  padding-bottom: 40px !important;
+  padding-right: 10px;
+}
+.data-section table tbody tr td img {
+  width: 120px;
+}

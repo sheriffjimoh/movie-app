@@ -3,7 +3,7 @@
           <section class="modal-section"  >
                 <div class="modal">
                     <div class="modal-top">
-                       <h1>Add New Movie</h1>
+                       <h1>Add Categories</h1>
                        <div class="close">
                         <button @click="ModalDeactivate"><span>x</span></button>    
                        </div>
@@ -14,29 +14,39 @@
                      <div class="modal-body">
                       
                          <form >
-                              <div>
-                                 <input type="text"  placeholder="Movie Title" id="title">
-                             </div>
-                             <div>
-                                 <select name="category" id="category">
-                                     <option value="" selected>select--</option>
-                                     <option value="nollywood">Nollywood</option>
-                                     <option value="bollywood">Bollywood</option>
-                                     <option value="Musicvideo">Music Video</option>
-                                 </select>
-                             </div>
-                              <div>
-                                <textarea name="description" id="description" placeholder="Describe this movie..." cols="30" rows="5"></textarea>
-                             </div>
-                             <div>
-                                <textarea name="artist" id="artist" placeholder="Add most popular artist name in movie, seperate with comma..." cols="30" rows="5"></textarea>
-                             </div>
-                              <div class="div-submit">
-                                 <input type="submit" name="" id=""  value="Create">
+                            <div class="row">
+                                <div>
+                                    <input type="text"  placeholder="Movie Category" id="title">
+                                </div>
+                                
+                                <div class="div-submit">
+                                    <input type="submit" name="" id=""  value="Create">
+                                </div>
                              </div>
                          </form>
                     </div>
-                     <div class="modal-footer">
+                     <div class="data-section">
+
+                         <h3>Categories List</h3>
+
+                         <table>
+                             <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>Music</td>
+                                     <td>05-06-2021</td>
+                                <td> <a href="#" class="red">Delete</a>| <a href="#" class="green">Edit</a>|<a href="#">View</a></td>
+                         
+                                 </tr>
+                             </tbody>
+
+                         </table>
 
                     </div>
             
@@ -51,7 +61,7 @@
 export default {
      data(){
         return{
-        isactive:true
+        isactiveCategory:true
             
         }
 
@@ -84,6 +94,11 @@ export default {
     margin: 0px;
     display: flex;
     justify-content: center;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
 }
 .modal-section{
       display: flex;
@@ -195,7 +210,7 @@ export default {
         background-color: black;
         color: #fff;
         font-weight: 800;
-        margin-bottom: 10px;
+        /* margin-bottom: 10px; */
      
     } 
 
