@@ -1,5 +1,9 @@
 <template>
-  <dashboard-component></dashboard-component>
+  <div>
+     <dashboard-component></dashboard-component>
+      <vue-progress-bar></vue-progress-bar>  
+  </div>
+
 </template>
 
 <script>
@@ -9,6 +13,17 @@ import Dashboard from './dashboard/Dashboard.vue';
        components:{
           Dashboard
        },
+       beforeCreate(){
+          this.$Progress.start();
+       },
+       created(){
+           
+
+          
+       },
+       mounted(){
+            this.$Progress.finish();
+       }
       
     }
 </script>

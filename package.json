@@ -11,7 +11,7 @@
         "scss": "node-sass --watch resources/css/ -o public/css"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.21.1",
         "bootstrap": "^4.6.0",
         "browser-sync": "^2.26.14",
         "browser-sync-webpack-plugin": "^2.3.0",
@@ -25,6 +25,13 @@
         "sass-loader": "^11.0.1",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.5",
-        "vue-template-compiler": "^2.6.12"
+        "vue-template-compiler": "^2.6.12",
+        "vue-vform": "^1.0.4"
+    },
+    "dependencies": {
+        "moment": "^2.29.1",
+        "sweetalert2": "^11.0.18",
+        "vform": "^2.1.0",
+        "vue-progressbar": "^0.7.5"
     }
 }

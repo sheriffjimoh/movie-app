@@ -13,36 +13,47 @@
                         
                      <div class="modal-body">
                       
-                         <form >
+                         <form ref="form" enctype="multipart/form-data"   @submit.prevent="formAction">
                               <div>
-                                 <input type="text"  placeholder="Movie Title" id="title">
+
+                                <input type="text" v-model="form.title"  name="title" placeholder="Movie Title" id="title"
+                                :class="{ 'is-invalid': form.errors.has('title') }">
+                                <div class="text-danger" v-if="form.errors.has('title')" v-html="form.errors.get('title')" />
+                                 
                              </div>
                              <div>
-                                 <select name="category" id="category">
+                                 <select name="category" id="category"  v-model="form.category">
                                      <option value="" selected>select--</option>
-                                     <option value="nollywood">Nollywood</option>
-                                     <option value="bollywood">Bollywood</option>
-                                     <option value="Musicvideo">Music Video</option>
+                                     <option value="1">Nollywood</option>
+                                     <option value="2">Bollywood</option>
+                                     <option value="3">Music Video</option>
                                  </select>
+                                  <div class="text-danger" v-if="form.errors.has('category')" v-html="form.errors.get('category')" />
                              </div>
                               <div>
-                                <textarea name="description" id="description" placeholder="Describe this movie..." cols="30" rows="5"></textarea>
+                                <textarea name="description" v-model="form.description" id="description" placeholder="Describe this movie..." cols="30" rows="5"></textarea>
+                                  <div class="text-danger" v-if="form.errors.has('description')" v-html="form.errors.get('description')" />
                              </div>
                              <div>
-                                <textarea name="artist" id="artist" placeholder="Add most popular artist name in movie, seperate with comma..." cols="30" rows="5"></textarea>
+                                <textarea name="artist" id="artist" v-model="form.artist" placeholder="Add most popular artist name in movie, seperate with comma..." cols="30" rows="5"></textarea>
+                                  <div class="text-danger" v-if="form.errors.has('artist')" v-html="form.errors.get('artist')" />
                              </div>
                               <div class="file">
                                    <div>
-                                  <input type="file" >     
+                                  
+                                  <input type="file"  name="file"   @change="readFile">  
+                                  <br><br>
+                                   <div class="text-danger" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
                                   </div>
                                 
                                  <div>
-                                      <img src="https://lumiere-a.akamaihd.net/v1/images/p_cruella_disneyplus_21093_6184d4aa.jpeg" alt="">
+                                      <img v-if=imgUrl :src="imgUrl" alt="">
+                                      
                                  </div>
                              </div>
                              
                               <div class="div-submit">
-                                 <input type="submit" name="" id=""  value="Create">
+                                 <input type="submit" name="submit" id=""  value="Create">
                              </div>
                          </form>
                     </div>
@@ -61,7 +72,12 @@
 export default {
      data(){
         return{
-        isactive:true
+        isactive:true,
+        form: new Form({ title:"",category:"", description:"",file:"",artist:""  }),
+        imgUrl:"",
+        fileType:['image/jpg','image/png','image/jpeg'],
+        errMessage:""
+
             
         }
 
@@ -74,8 +90,38 @@ export default {
       methods:{
            ModalDeactivate(){
              window.location.reload();
+            },
+            formAction(){
+          
+            this.form.post('/api/movie', { headers: {"Content-Type": "multipart/form-data"}
+             }).then((data) => {
+                if(data.data.status == 404){
+                 Swal.fire({'icon':'error', 'text':data.data.message});    
+                }else if(data.data.status == 200){
+                 Swal.fire({'icon':'success', 'text':data.data.message}); 
+                 this.$refs.form.reset(); 
+                  
+                }
+                })
+                .catch((data) => {
+                   console.log(data);
+                })
+            },
 
-           }
+            readFile(e){
+                   
+                        const file = e.target.files[0];
+                  if(!this.fileType.includes(file.type)){
+                     Toast.fire({ icon: 'error', title: 'This file type is not allowed, only png/jpg/jpeg  are allowed'
+                            });
+                           this.form.file = "";
+                           this.imgUrl ="";
+                           return false;
+                        }
+                         this.imgUrl = URL.createObjectURL(file);
+                         this.form.file = file;
+                         this.errMessage ="";
+            }
     }
 }
 </script>

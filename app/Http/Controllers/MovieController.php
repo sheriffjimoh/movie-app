@@ -7,6 +7,7 @@ use App\Models\Movie;
 use Illuminate\Support\Facades\DB;
 use App\http\Resources\MovieResourceses;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class MovieController extends Controller
 {
@@ -21,6 +22,8 @@ class MovieController extends Controller
         $data = Movie::all();
         if($data){
             return MovieResourceses::collection($data);
+        }else{
+            return response()->json(['msg'=> 'unable to load data','status' => 404] );
         }
     }
 
@@ -97,21 +100,34 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         //
-        if($request->hasFile('image')){
-          $image_ext = $request->image->extension();
+
+        $validator =  $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'category'=>'required',
+            'artist'=> 'required',
+            'file' => 'required' ]);
+
+
+    //    if($validator->fails()) {
+    //        return \Response::json(['errors' => $validator->errors()->all()], 422);
+    //     }
+        if($request->hasFile('file')){
+          $image_ext = $request->file->extension();
           $allowed_ext = array('png','jpg','jpeg');
           if(!in_array($image_ext, $allowed_ext)){
-              return 'only png, jpeg and jpg image are allowed';
+              return  response()->json(['status'=>404, 'message'=> 'only png, jpeg and jpg image are allowed']);
           }else{
 
              $unique= uniqid();
              $new_image_name = trim($request->title).$unique.'.'.$image_ext;
-             $request->image->storeAs('public/images', $new_image_name);
+             $request->file->storeAs('public/images', $new_image_name);
           }
         }else{
-            return 'image is required';
+          return  response()->json(['status'=>404, 'message'=> 'image is required please!!']);
+           
         }
-        $path = asset('images/'.$new_image_name);
+        $path = asset('storage/images/'.$new_image_name);
 
         $data = Movie::create([
             'title' =>$request->title,
@@ -122,7 +138,9 @@ class MovieController extends Controller
         ]);
 
         if($data){
-            return 200;
+
+          return response()->json(['status'=>200,'message'=>'created successfull']);
+
         }
     }
 

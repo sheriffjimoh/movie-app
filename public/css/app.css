@@ -161,3 +161,8 @@ a {
 .data-section table tbody tr td img {
   width: 120px;
 }
+
+
+.text-danger{
+  color: firebrick;
+}
