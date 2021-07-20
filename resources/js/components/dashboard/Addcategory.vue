@@ -13,10 +13,10 @@
                         
                      <div class="modal-body">
                       
-                         <form >
+                         <form ref="form" @submit.prevent="formAction">
                             <div class="row">
                                 <div>
-                                    <input type="text"  placeholder="Movie Category" id="title">
+                                    <input type="text" v-model="form.name"  placeholder="Movie Category" id="name   ">
                                 </div>
                                 
                                 <div class="div-submit">
@@ -38,10 +38,10 @@
                                 </tr>
                              </thead>
                              <tbody>
-                                 <tr>
-                                     <td>Music</td>
-                                     <td>05-06-2021</td>
-                                <td> <a href="#" class="red">Delete</a>| <a href="#" class="green">Edit</a>|<a href="#">View</a></td>
+                                 <tr v-for="category in categories" :key="category.id">
+                                     <td>{{category.name}}</td>
+                                     <td>{{category.created_at| formatDate}}</td>
+                                <td> <a href="#" @click="deleteMe(category.id)" class="red">Delete</a>| <a href="#" class="green">Edit</a></td>
                          
                                  </tr>
                              </tbody>
@@ -61,7 +61,9 @@
 export default {
      data(){
         return{
-        isactiveCategory:true
+        isactiveCategory:true,
+        categories:[],
+        form: new Form({name:""}),
             
         }
 
@@ -75,7 +77,57 @@ export default {
            ModalDeactivate(){
              window.location.reload();
 
-           }
+           },
+            async loadcategories(){
+                    const response = await fetch("http://localhost:3000/api/category/");
+                            const dataRow = await response.json();
+                            this.categories = dataRow.data;
+             },
+
+             deleteMe(param){
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This record and it`s details will be permanantly deleted!',
+                    icon: 'warning',
+                    buttons: ["Cancel", "Yes!"],
+                }).then(function(value) {
+                    if (value) {
+                         fetch(`/api/category/${param}`,{
+                            method:'delete' })
+                            .then((res) => console.log(res.json()) )
+                            .then(()=> {
+                         Fire.$emit('AfterCreatedCategoriesLoadIt');
+                 });
+                    }
+                });
+             },
+   
+
+
+            formAction(){
+             this.form.post('/api/category').then((data) => {
+                if(data.data.status == 404){
+                 Swal.fire({'icon':'error', 'text':data.data.message});    
+                }else if(data.data.status == 200){
+                 Swal.fire({'icon':'success', 'text':data.data.message}); 
+                 this.form.name =" "; 
+                 Fire.$emit('AfterCreatedCategoriesLoadIt');
+                  
+                }
+                })
+                .catch((data) => {
+                     Swal.fire({'icon':'error', 'text':data.data.message});  
+                })
+    },
+ },
+    created(){
+             this.loadcategories();       
+           Fire.$on('AfterCreatedCategoriesLoadIt',()=>{ 
+                //custom events fire on
+                this.loadcategories();
+            });
+
+           
     }
 }
 </script>

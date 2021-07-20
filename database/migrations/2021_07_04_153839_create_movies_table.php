@@ -22,7 +22,7 @@ class CreateMoviesTable extends Migration
             $table->string('image');
             $table->timestamps();
 
-            $table->foreign('category')->references('id')->on('categories');
+            // $table->foreign('category')->references('id')->on('categories');
         });
     }
 

@@ -22,11 +22,10 @@
                                  
                              </div>
                              <div>
-                                 <select name="category" id="category"  v-model="form.category">
+                                 <select name="category" id="category" v-model="form.category"  >
                                      <option value="" selected>select--</option>
-                                     <option value="1">Nollywood</option>
-                                     <option value="2">Bollywood</option>
-                                     <option value="3">Music Video</option>
+                                     <option v-for="category in categories" :value="category.id" :key="category.id">   {{ category.name }}
+                                    </option>
                                  </select>
                                   <div class="text-danger" v-if="form.errors.has('category')" v-html="form.errors.get('category')" />
                              </div>
@@ -76,8 +75,8 @@ export default {
         form: new Form({ title:"",category:"", description:"",file:"",artist:""  }),
         imgUrl:"",
         fileType:['image/jpg','image/png','image/jpeg'],
-        errMessage:""
-
+        errMessage:"",
+        categories:[]
             
         }
 
@@ -92,14 +91,16 @@ export default {
              window.location.reload();
             },
             formAction(){
-          
+           this.$Progress.start();
             this.form.post('/api/movie', { headers: {"Content-Type": "multipart/form-data"}
              }).then((data) => {
+
+                this.$Progress.finish();
                 if(data.data.status == 404){
                  Swal.fire({'icon':'error', 'text':data.data.message});    
                 }else if(data.data.status == 200){
-                 Swal.fire({'icon':'success', 'text':data.data.message}); 
-                 this.$refs.form.reset(); 
+                 this.resetimageUrl();
+                 Swal.fire({'icon':'success', 'text':data.data.message});
                   
                 }
                 })
@@ -110,7 +111,7 @@ export default {
 
             readFile(e){
                    
-                        const file = e.target.files[0];
+                const file = e.target.files[0];
                   if(!this.fileType.includes(file.type)){
                      Toast.fire({ icon: 'error', title: 'This file type is not allowed, only png/jpg/jpeg  are allowed'
                             });
@@ -121,7 +122,21 @@ export default {
                          this.imgUrl = URL.createObjectURL(file);
                          this.form.file = file;
                          this.errMessage ="";
-            }
+            },
+             async loadcategories(){
+                    const response = await fetch("http://localhost:3000/api/category/");
+                            const dataRow = await response.json();
+                            this.categories = dataRow.data;
+             },
+
+             resetimageUrl(){
+                 this.imgUrl = " ";
+                 this.$refs.form.reset(); 
+             }
+    },
+
+    created(){
+        this.loadcategories();
     }
 }
 </script>

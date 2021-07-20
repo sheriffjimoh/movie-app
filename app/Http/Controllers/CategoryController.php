@@ -49,7 +49,8 @@ class CategoryController extends Controller
         $data = Category::create([
             'name'=> $request->name ]);
         if($data){
-            return 200;
+          return response()->json(['status'=>200,'message'=>'created successfull']);
+
         }
     }
 
