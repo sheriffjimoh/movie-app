@@ -63,7 +63,7 @@
 import Addmovies from './Addmovies.vue';
 import Addcategory from './Addcategory.vue';
 export default {
-
+    name:"Dashboard",
     components:{
         Addmovies,
         Addcategory

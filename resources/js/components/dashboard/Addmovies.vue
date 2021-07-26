@@ -18,7 +18,7 @@
 
                                 <input type="text" v-model="form.title"  name="title" placeholder="Movie Title" id="title"
                                 :class="{ 'is-invalid': form.errors.has('title') }">
-                                <div class="text-danger" v-if="form.errors.has('title')" v-html="form.errors.get('title')" />
+                                <div class="alert_error" v-if="form.errors.has('title')" v-html="form.errors.get('title')" />
                                  
                              </div>
                              <div>
@@ -91,6 +91,7 @@ export default {
              window.location.reload();
             },
             formAction(){
+                console.log(this.form.errors);
            this.$Progress.start();
             this.form.post('/api/movie', { headers: {"Content-Type": "multipart/form-data"}
              }).then((data) => {
@@ -105,7 +106,8 @@ export default {
                 }
                 })
                 .catch((data) => {
-                   console.log(data);
+                //    console.log(data);
+                     Swal.fire({'icon':'error', 'text':data});
                 })
             },
 
@@ -124,7 +126,7 @@ export default {
                          this.errMessage ="";
             },
              async loadcategories(){
-                    const response = await fetch("http://localhost:3000/api/category/");
+                    const response = await fetch("/api/category/");
                             const dataRow = await response.json();
                             this.categories = dataRow.data;
              },
@@ -322,12 +324,12 @@ export default {
     width: 600px;
     padding: 10px;
     }
-    .alert  .alert_error{
+    .alert_error{
     background-color: firebrick;
     color: white;
     font-weight: bolder;
-    width: 600px;
-    padding: 10px;
+    /* width: 600px;
+    padding: 10px; */
      
      }
      .user_card{

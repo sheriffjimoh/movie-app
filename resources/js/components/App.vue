@@ -1,6 +1,8 @@
 <template>
   <div>
-     <dashboard-component></dashboard-component>
+     <!-- <dashboard-component></dashboard-component> -->
+     <!-- <home-component></home-component> -->
+      <router-view></router-view>
       <vue-progress-bar></vue-progress-bar>  
   </div>
 

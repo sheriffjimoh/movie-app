@@ -22,8 +22,8 @@ let Fire = new Vue()
 window.Fire = Fire;
 
 //Import v-from
-import { Form, HasError, AlertError } from 'vform';
+import { Form } from 'vform';
 window.Form = Form;
 Vue.component('vform', require('vue-vform'));
-Vue.component(HasError, HasError)
-Vue.component(AlertError, AlertError)
+// Vue.component(HasError, HasError)
+// Vue.component(AlertError, AlertError)

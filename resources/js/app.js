@@ -14,28 +14,19 @@ require('./sweetalert');
 
 
 window.Vue = require('vue').default;
+
+// Default component 
 Vue.component('app-component', require('./components/App.vue').default);
 Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
-
-// vue progress bar
-
-// const options = {
-//   color: '#bffaf3',
-//   failedColor: '#874b4b',
-//   thickness: '5px',
-//   transition: {
-//     speed: '0.2s',
-//     opacity: '0.6s',
-//     termination: 300
-//   },
-//   autoRevert: true,
-//   location: 'left',
-//   inverse: false
-// }
+Vue.component('home-component', require('./components/frontend/home.vue').default);
 
 
+// router
+
+import router from "./router.js";
 
 const app = new Vue({
     el: '#app',
+    router
 });
 

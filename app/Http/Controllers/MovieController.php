@@ -99,14 +99,14 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
+      
+      
         $validator =  $request->validate([
             'title' => 'required',
             'description' => 'required',
             'category'=>'required',
             'artist'=> 'required',
-            'file' => 'required' ]);
+            'file' => 'required',]);
 
 
     //    if($validator->fails()) {

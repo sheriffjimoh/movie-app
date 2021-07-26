@@ -17,6 +17,8 @@
                             <div class="row">
                                 <div>
                                     <input type="text" v-model="form.name"  placeholder="Movie Category" id="name   ">
+                               <div class="alert_error" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                 
                                 </div>
                                 
                                 <div class="div-submit">
@@ -105,6 +107,7 @@ export default {
 
 
             formAction(){
+                //  console.log(this.);
              this.form.post('/api/category').then((data) => {
                 if(data.data.status == 404){
                  Swal.fire({'icon':'error', 'text':data.data.message});    
@@ -223,12 +226,16 @@ export default {
         width: 350px;
     }
 
-     .modal .modal-body form div{
-         padding: 10px;
-         justify-content: center;
-         align-items: center;
-        
+     .modal .modal-body form .row{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items:flex-start;
      }
+
+      .modal .modal-body form .row div{
+          padding: 10px;
+      }
      
    .modal .modal-body form div input[type=text] {
          width: 300px;
@@ -292,12 +299,12 @@ export default {
     width: 600px;
     padding: 10px;
     }
-    .alert  .alert_error{
+    .alert_error{
     background-color: firebrick;
     color: white;
     font-weight: bolder;
-    width: 600px;
-    padding: 10px;
+    /* width: 600px;
+    padding: 10px; */
      
      }
      .user_card{
