@@ -5,7 +5,7 @@
             <ul class="category-items-list" v-for="category in categories" :key="category.id">
                 
                 <li class="category-item " :class="{'active': valueAsign == category.name}">
-                    <a href="#" @click="FilterCategories(category.name)">{{category.name}}</a>
+                    <a href="#" @click="FilterCategories(category.id)">{{category.name}}</a>
                 </li>
                
             </ul>
@@ -22,7 +22,6 @@
                         <div class="movie-caption">
                         <h3 class="movie-title">{{movie.title}}</h3>
                         <h6>Movie 2021</h6>
-                        {{movie.category_id}}
                         <a href="" class="btn btn-secondary-outline">Wacth Now</a>
                         </div>
                     </div>
@@ -41,7 +40,7 @@ export default {
          isActive:false,
          categories:[],
          movies:[],
-         valueAsign:" "
+         valueAsign:""
         }
     },
     methods:{
@@ -56,12 +55,15 @@ export default {
                             const dataRow = await response.json();
                             this.movies = dataRow.data;
          },
-         FilterCategories(param){
-             if(param != null){
-                this.valueAsign = param;
-                this.movies = this.movies.filter((data) => data.category_id == this.valueAsign);
-                console.log(param);
+        async  FilterCategories(param){
+             if(param!= null){
+                            const response = await fetch(`http://localhost:3000/api/movie/bycategory/${param}`);
+                            const dataRow = await response.json();
+                            this.movies = dataRow.data;
+             }else{
+                 console.log(param);
              }
+
          }
     },
     created(){
