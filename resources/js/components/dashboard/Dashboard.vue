@@ -5,7 +5,7 @@
                 <header>
                      <div class="title">
                          <h2>Manage Movies</h2>
-                         <img src="http://127.0.0.1:8000/images/New Turn Weddings60f583a25c68e.png" alt="">
+                         <!-- <img src="http://127.0.0.1:8000/images/New Turn Weddings60f583a25c68e.png" alt=""> -->
                      </div>
                       <div class="button">
                           <button @click="Activatecategorymodal">

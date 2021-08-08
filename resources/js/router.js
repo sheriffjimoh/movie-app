@@ -2,12 +2,12 @@ import Vue from "vue"
 import Router from "vue-router"
 Vue.use(Router);
 
-import Home from "./components/frontend/Home";
+import Home from "./components/frontend/Home.vue";
 import Dashboard from "./components/dashboard/Dashboard";
 
 const routes = [
     {
-        path:"/",
+        path:"/dashboard",
         component:Home
     },
     {
