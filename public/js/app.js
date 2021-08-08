@@ -2771,7 +2771,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 
 
 var routes = [{
-  path: "/dashboard",
+  path: "/",
   component: _components_frontend_Home_vue__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
   path: "/dashboard",
