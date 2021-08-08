@@ -10,13 +10,13 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <!-- Css -->
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{secure_asset('css/app.css')}}">
       
     </head>
     <body class="antialiased">
          <div id="app">
          <app-component></app-component>
         </div>
-       <script src="{{asset('js/app.js')}}"></script>
+       <script src="{{secure_asset('js/app.js')}}"></script>
     </body>
 </html>
