@@ -1,5 +1,11 @@
 {
     "private": true,
+    "name": "web-movie-apps",
+        "description": "my web movie apps",
+        "version": "1.0.0",
+        "engines": {
+          "node": "14.x"
+        },
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
