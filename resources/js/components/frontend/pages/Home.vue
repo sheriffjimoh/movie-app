@@ -1,40 +1,20 @@
 <template>
      <div class="container-m" >
-         <header class="header-section">
-            
-            <ul class="category-items-list" v-for="category in categories" :key="category.id">
-                
-                <li class="category-item " :class="{'active': valueAsign == category.name}">
-                    <a href="#" @click="FilterCategories(category.id)">{{category.name}}</a>
-                </li>
-               
-            </ul>
-         </header>
-         <div class="middle-area">
-         <h2>Top rated <span class="secoundary-color">HD</span> movies</h2>
-         <p>New block buster released await you!</p>
-
-         </div>
-         <div class="div-content">
-               <div class="row">
-                    <div class="movie-box" v-for="movie in movies " :key="movie.id">
-                        <img :src="movie.image" alt="" class="movie-thumbnail">
-                        <div class="movie-caption">
-                        <h3 class="movie-title">{{movie.title}}</h3>
-                        <h6>Movie 2021</h6>
-                        <a href="" class="btn btn-secondary-outline">Wacth Now</a>
-                        </div>
-                    </div>
-
-               </div>
-               
-         </div>
+         <headerComponent />
+         <loadmovies/>
      </div>
 </template>
 
 <script>
+
+import Loadmovies from '../Loadmovie.vue';
+import HeaderComponent from '../HeaderComponent.vue';
 export default {
     name:'Home',
+    components:{
+      Loadmovies,
+      HeaderComponent
+    },
     data(){
         return{
          isActive:false,
@@ -60,6 +40,7 @@ export default {
                             const response = await fetch(`http://localhost:3000/api/movie/bycategory/${param}`);
                             const dataRow = await response.json();
                             this.movies = dataRow.data;
+                            this.valueAsign = param;
              }else{
                  console.log(param);
              }
@@ -69,7 +50,7 @@ export default {
     created(){
        this.Loadcategories();
        this.Loadmovies();
+       console.log('created');
     }
- 
 }
 </script>
