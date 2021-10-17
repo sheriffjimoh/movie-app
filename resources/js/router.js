@@ -2,10 +2,10 @@ import Vue from "vue"
 import Router from "vue-router"
 Vue.use(Router);
 
-import Home from "./components/frontend/pages/Home";
+import Home from "./pages/frontend/Home";
 // import Home from "./components/frontend/HeaderComponent";
-import Dashboard from "./components/dashboard/Dashboard";
-import Search from "./components/frontend/pages/Search"
+import Dashboard from "./pages/dashboard/Dashboard";
+import Search from "./pages/frontend/Search"
 
 const routes = [
     {

@@ -37,8 +37,8 @@ require('./customEvent');
 window.Vue = require('vue').default;
 
 // Default component 
-Vue.component('app-component', require('./components/App.vue').default);
-Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
+Vue.component('app-component', require('./App.vue').default);
+Vue.component('dashboard-component', require('./pages/dashboard/Dashboard.vue').default);
 
 
 

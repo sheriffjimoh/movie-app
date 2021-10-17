@@ -442,3 +442,15 @@ a {
   border: 0px !important;
   outline: none !important;
 }
+
+.row-movies{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 20%;
+  justify-content: center;
+}
+
+.movie-box{
+  flex-basis: 15%;
+}

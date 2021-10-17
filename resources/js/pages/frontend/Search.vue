@@ -10,7 +10,7 @@
           
         <div class="search-form">
             <form action="#">
-              <input type="text" v-model="searchValue"  placeholder="Search movie by title">
+              <input type="text" v-model="searchValue"  @change="handleSearch()" placeholder="Search movie by title">
             </form>
         </div>
        
@@ -27,32 +27,20 @@
         </div>
       </nav>
      <!-- search result -->
-
-        <div>
-         <main id="main" v-for="(item, index) in movies"  :key="index">
-          <div class="movie" >
-               <img :src="item.poster_path ? IMG_URL+item.poster_path: DEMO_IMG_URL " alt="Some Movie">
-
-            <div class="movie-info">
-                 <h3>{{item.title.length > 9 ? item.title.slice(0,13)+'...': item.title}}</h3>
-                <span :class="getColor(item.vote_average)">{{item.vote_average}}</span>
-            </div>
-
-            <div class="overview">
-
-                <h3>Overview</h3>
-                  {{item.overview.length > 200 ? item.overview.slice(0,200)+'...': item.overview }}
-                <br/> 
-                <button class="know-more" id="567765">Watch Now</button>
-            </div>
-          </div>
-     </main>    
+      <div  class="row-movies">
+         <div class="movie-box"   v-for="(item, index) in movies"  :key="index">
+              <movieContainer :item="item"/>
         </div>
+      </div>
+         
      </div>
 </template>
 <script>
+import MovieContainer from "../../components/MovieContainer.vue"
 export default {
-
+  components:{
+     MovieContainer
+  },
    data(){
      return{
         movies:[],
@@ -62,18 +50,10 @@ export default {
    },
    methods:{
                 async Loadmovies(){
-                                  await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&?&${this.API_KEY}`)
-                                 .then( (response)=> {
-                                         const dataRow = response.json();
-                                          this.movies = dataRow.results;  
-                                 })
-                                 .catch((error) =>{
-                                         console.log(error)
-                                 })
-                         
-                         
-
-                     }, 
+                  const response = await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&?&${this.API_KEY}`);
+                            const dataRow = await response.json();
+                            this.movies = dataRow.results;
+                   }, 
                      getColor(vote) {
                           if(vote>= 8){
                             return 'green'
@@ -82,10 +62,21 @@ export default {
                          }else{
                         return 'red'
                         }
+                  },
+
+              async    handleSearch(){
+                    
+                     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&language=en-US&query=${this.searchValue}&include_adult=false`);
+                            const dataRow = await response.json();
+                            this.movies = dataRow.results;
+                            console.log(dataRow.results);
+                    console.log(this.searchValue)
                   }
    },
    
    created(){
+
+     console.log("created")
                   this.Loadmovies();    
                  console.log(this.movies)
         }
