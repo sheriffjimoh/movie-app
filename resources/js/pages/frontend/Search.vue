@@ -10,7 +10,21 @@
           
         <div class="search-form">
             <form action="#">
-              <input type="text" v-model="searchValue"  @change="handleSearch()" placeholder="Search movie by title">
+              <input type="text" v-model="searchValue"  @keyup="handleSearch()" placeholder="Search movie by title">
+              <select name="" id="" v-model="searchYear" @change="handleSearch()">
+                <option value="">Filter by year</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2012">2012</option>
+              </select>
             </form>
         </div>
        
@@ -45,7 +59,8 @@ export default {
      return{
         movies:[],
         searchValue : "",
-        API_KEY:'api_key=1cf50e6248dc270629e802686245c2c8',
+        API_KEY:'api_key=f238c6a536a5a785bd7508ca07f6c737',
+        searchYear:""
      }
    },
    methods:{
@@ -66,7 +81,7 @@ export default {
 
               async    handleSearch(){
                     
-                     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&language=en-US&query=${this.searchValue}&include_adult=false`);
+                     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=f238c6a536a5a785bd7508ca07f6c737&language=en-US&query=${this.searchValue}&include_adult=false&year=${this.searchYear}`);
                             const dataRow = await response.json();
                             this.movies = dataRow.results;
                             console.log(dataRow.results);
